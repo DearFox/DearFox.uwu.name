@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500&display=swap" rel="stylesheet">
+	<title>DearFox | Owo</title>
+	<link rel="icon" type="image/png" href="https://visage.surgeplay.com/face/16/cdb909c2-499f-409c-8723-27c5b6effc20" />
+	<style>
+		body{
+			margin: 0px;
+			font-family: 'Montserrat', sans-serif;
+			text-align: center;
+		}
+		.main{
+			background:#1A1C1D;
+			height: 100vh;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.card{
+			background:#26292A;
+			//background: linear-gradient(90deg, rgba(247,32,136,1) 0%, rgba(247,32,136,1) 20%, rgba(247,209,0,1) 40%, rgba(247,209,0,1) 60%, rgba(32,171,247,1) 80%, rgba(32,171,247,1) 100%);
+			//border-bottom: 10px #fff solid;
+			background: linear-gradient(to right, rgba(247,32,136,1) 0%, rgba(247,32,136,1) 33%, rgba(247,209,0,1) 33%, rgba(247,209,0,1) 67%, rgba(32,171,247,1) 67%, rgba(32,171,247,1) 100%) left bottom #26292A no-repeat;
+			background-size: 100% 10px;
+			height: 350px;
+			width: 620px;
+			box-shadow: 0 0 10px rgba(0,0,0,0.5);
+			padding: 10px;
+			border-radius: 10px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.comming_soon{
+			filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
+		}
+		h2{
+			margin: 0px;
+			font-size: xxx-large;
+			color:#FA9A4E;
+			padding-bottom: 32px;
+		}
+		h3 {
+			color:#DBD8D3;
+			padding-bottom: 32px;
+		}
+		a {
+			text-decoration: underline;
+			cursor: pointer;
+			color: white;
+		}
+		.modal {
+			display: none;
+			position: absolute;
+			//width: 100%;
+			//height: 100%;
+			//background: #00000000;
+		}
+		.modal_bg {
+			display: none;
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			background: #00000050;
+		}
+		.modal-warning {
+      background:#26292A;
+      height: 170px;
+      width: 420px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+			padding: 10px;
+      border-radius: 10px;
+			margin: 32px auto;
+		}
+		.modal-warning-buttons {
+			//float: right;
+		}
+		.enter {
+			width: 266px;
+			background-color:#4caf50;
+		}
+		.close {
+			float: right;
+			background-color:#f44336;
+		}
+		.modal-warning-buttons > button {
+			//height: 32px;
+			//width: 100px;
+			font-family: 'Montserrat', sans-serif;
+    	font-weight: bold;
+    	font-size: x-large;
+    	color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<div class="main">
+		<div class="card">
+			<div class="comming_soon">
+				<!-- <img src="https://visage.surgeplay.com/bust/128/cdb909c2-499f-409c-8723-27c5b6effc20" alt=""> -->
+				<img src="img/Maksvell_new.png" alt="" width="128" height="128">
+				<h2>DearFox</h2>
+				<a target="_blank" href="https://t.me/DearFox"><img src="img/tg.png" alt="" width="64" height="64"></a>
+				<a target="_blank" href="https://www.furaffinity.net/user/dearfox/"><img src="img/fa.png" alt="" width="64" height="64"></a>
+				<a onclick="warningModal('https://twitter.com/MrDearFox')"><img src="img/twitter.png" alt="" width="64" height="64"></a>
+				<a target="_blank" href="https://github.com/DearFox"><img src="img/github.png" alt="" width="64" height="64"></a>
+				<a target="_blank" href="https://modrinth.com/user/DearFox"><img src="img/modrinth.png" alt="" width="64" height="64"></a>
+			</div>
+		</div>
+		<div class="modal_bg" onclick="closeModal()"></div>
+		<div class="modal">
+			<div class="modal-warning">
+				<h3>Warning!<br>Content at this link may contain NSFW content!</h3>
+				<div class="modal-warning-buttons">
+					<button class="enter" id="modal-go">Open</button>
+					<button class="close" onclick="closeModal()">X</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		function warningModal(url) {
+			document.querySelector(".modal").style.display = "block";
+			document.querySelector(".modal_bg").style.display = "block";
+			document.getElementById("modal-go").setAttribute("onclick", "window.open('" + url + "', '_blank');closeModal()");
+		}
+		function closeModal() {
+			document.querySelector(".modal").style.display = "none";
+			document.querySelector(".modal_bg").style.display = "none";
+		}
+	</script>
+</body>
+</html>
