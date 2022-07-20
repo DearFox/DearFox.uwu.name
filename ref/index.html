@@ -6,7 +6,7 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500&display=swap" rel="stylesheet">
-	<title>DearFox | Uwu</title>
+	<title>DearFox | Uwu | Реф</title>
 	<link rel="icon" type="image/png" href="https://visage.surgeplay.com/face/16/cdb909c2-499f-409c-8723-27c5b6effc20" />
 	<style>
 		body{
@@ -23,9 +23,7 @@
 		}
 		.card{
 			background:#26292A;
-			//background: linear-gradient(90deg, rgba(247,32,136,1) 0%, rgba(247,32,136,1) 20%, rgba(247,209,0,1) 40%, rgba(247,209,0,1) 60%, rgba(32,171,247,1) 80%, rgba(32,171,247,1) 100%);
-			//border-bottom: 10px #fff solid;
-			background: linear-gradient(to right, rgba(247,32,136,1) 0%, rgba(247,32,136,1) 33%, rgba(247,209,0,1) 33%, rgba(247,209,0,1) 67%, rgba(32,171,247,1) 67%, rgba(32,171,247,1) 100%) left bottom #26292A no-repeat;
+			
 			background-size: 100% 10px;
 			height: 350px;
 			width: 620px;
@@ -103,36 +101,27 @@
 		<div class="card">
 			<div class="comming_soon">
 				<!-- <img src="https://visage.surgeplay.com/bust/128/cdb909c2-499f-409c-8723-27c5b6effc20" alt=""> -->
-				<a href="ref/"><img src="img/Maksvell_new.png" alt="" width="128" height="128"></a>
-				<h2>DearFox</h2>
-				<a target="_blank" href="https://t.me/DearFox"><img src="img/tg.png" alt="" width="64" height="64"></a>
-				<a target="_blank" href="https://www.furaffinity.net/user/dearfox/"><img src="img/fa.png" alt="" width="64" height="64"></a>
-				<a onclick="warningModal('https://twitter.com/MrDearFox')"><img src="img/twitter.png" alt="" width="64" height="64"></a>
-				<a target="_blank" href="https://github.com/DearFox"><img src="img/github.png" alt="" width="64" height="64"></a>
-				<a target="_blank" href="https://modrinth.com/user/DearFox"><img src="img/modrinth.png" alt="" width="64" height="64"></a>
+				<img src="Maksvell.svg" alt="" width="128">
 			</div>
-		</div>
-		<div class="modal_bg" onclick="closeModal()"></div>
-		<div class="modal">
-			<div class="modal-warning">
-				<h3>Warning!<br>Content at this link may contain NSFW content!</h3>
-				<div class="modal-warning-buttons">
-					<button class="enter" id="modal-go">Open</button>
-					<button class="close" onclick="closeModal()">X</button>
-				</div>
+			<div class="null" style="width: 64px;height: 64px;"></div>
+			<div>
+				<div class="colors1">
+					<h3>click</h3>
+				<div class="color1" onclick="navigator.clipboard.writeText('#BF7339')" style="width: 32px;height: 32px;background: #BF7339;"></div><br>
+				<div class="color1" onclick="navigator.clipboard.writeText('#FA9A4E')" style="width: 32px;height: 32px;background: #FA9A4E;"></div><br>
+				<div class="color1" onclick="navigator.clipboard.writeText('#FFDECB')" style="width: 32px;height: 32px;background: #FFDECB;"></div><br>
+				<div class="color1" onclick="navigator.clipboard.writeText('#262427')" style="width: 32px;height: 32px;background: #262427;"></div>
+			</div>
+			</div>
+			<div class="null" style="width: 8px;height: 8px;"></div>
+			<div class="colors2">
+				<h3>to copy</h3>
+				<div class="color2" onclick="navigator.clipboard.writeText('#009D34')" style="width: 32px;height: 32px;background: #009D34;"></div><br>
+				<div class="color2" onclick="navigator.clipboard.writeText('#A31919')" style="width: 32px;height: 32px;background: #A31919;"></div><br>
+				<div class="color2" onclick="navigator.clipboard.writeText('#CBA23B')" style="width: 32px;height: 32px;background: #CBA23B;"></div><br>
+				<div class="color2" style="width: 32px;height: 32px;"></div>
 			</div>
 		</div>
 	</div>
-	<script>
-		function warningModal(url) {
-			document.querySelector(".modal").style.display = "block";
-			document.querySelector(".modal_bg").style.display = "block";
-			document.getElementById("modal-go").setAttribute("onclick", "window.open('" + url + "', '_blank');closeModal()");
-		}
-		function closeModal() {
-			document.querySelector(".modal").style.display = "none";
-			document.querySelector(".modal_bg").style.display = "none";
-		}
-	</script>
 </body>
 </html>
