@@ -5,7 +5,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+	<!-- <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script> -->
+	<script type="text/javascript" src="js/jquery-1.5.2.min.js"></script>
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;500&display=swap" rel="stylesheet">
 	<title>DearFox | Uwu | Реф</title>
 	<link rel="icon" type="image/png" href="https://visage.surgeplay.com/face/16/cdb909c2-499f-409c-8723-27c5b6effc20" />
@@ -234,8 +235,8 @@ footer .stuts span {
 var ctx;
 
 var images = [ // Массив используемых изображений
-    'https://d.furaffinity.net/art/mikamoro/1651788275/1651788255.mikamoro_okhtmoksbbs.jpg',
-    'https://d.furaffinity.net/art/mikamoro/1651787308/1651787278.mikamoro_bez_nazvania212_20180624204842.png'
+    'img/0.jpg',
+    'img/1.png'
 ];
 var iActiveImage = 0;
 
@@ -243,6 +244,8 @@ $(function(){
 
     // Вывводим текущее изображение
     var image = new Image();
+    //image.crossOrigin = "Anonymous";
+    image.setAttribute('crossOrigin', '');
     image.onload = function () {
     	var scale_int = image.height/335/10;
     		//ctx.scale(scale_int, scale_int);
