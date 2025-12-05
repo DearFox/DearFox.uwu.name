@@ -216,10 +216,13 @@ footer .stuts span {
                 <canvas id="panel" width="500" height="333"></canvas>
             </div>
             <div class="column2">
-                <div><input type="button" value="Другое изображение" id="swImage" /></div>
-                <div>Цвет:</div>
-                <div id="preview"></div>
-                <div>Параметры:</div>
+                <div><input type="button" value="Next IMG" id="swImage" style="width: 170px;" /></div>
+                <div>Color:</div>
+                <!-- <div id="preview"></div> -->
+                <div id="preview" style="display:inline-block; vertical-align:middle; width:80px; height:80px; border:1px #000 solid; box-shadow:2px 3px 3px #444444; border-radius:3px;"></div>
+                <div id="selectedColor" style="display:inline-block; vertical-align:middle; width:80px; height:80px; line-height:80px; text-align:center; border:1px #000 solid; box-shadow:2px 3px 3px #444444; border-radius:3px;"></div>
+
+                <div>Color data:</div>
                 <div>R: <input type="text" id="rVal" /></div>
                 <div>G: <input type="text" id="gVal" /></div>
                 <div>B: <input type="text" id="bVal" /></div>
@@ -231,73 +234,91 @@ footer .stuts span {
             <div style="clear:both;"></div>
         </div>
         <script>
-        	var canvas;
-var ctx;
-
-var images = [ // Массив используемых изображений
-    'img/0.jpg',
-    'img/1.png'
-];
+var canvas, ctx;
+var images = ['img/2.png','img/0.jpg','img/1.png'];
 var iActiveImage = 0;
+var maxWidth = 500;   // максимальная ширина контейнера
+var maxHeight = 1000;  // максимальная высота контейнера
 
 $(function(){
-
-    // Вывводим текущее изображение
-    var image = new Image();
-    //image.crossOrigin = "Anonymous";
-    image.setAttribute('crossOrigin', '');
-    image.onload = function () {
-    	var scale_int = image.height/335/10;
-    		//ctx.scale(scale_int, scale_int);
-        ctx.drawImage(image, 0, 0, image.width*scale_int, image.height*scale_int); // draw the image on the canvas
-        centeredScaling: true;
-
-        console.log(image.width);
-        console.log(image.height);
-        console.log(scale_int);
-    }
-    image.src = images[iActiveImage];
-
-    // Создаем объект canvas
     canvas = document.getElementById('panel');
     ctx = canvas.getContext('2d');
 
-    $('#panel').mousemove(function(e) { // Обработчик события mousemove (движение мыши)
-        var canvasOffset = $(canvas).offset();
-        var canvasX = Math.floor(e.pageX - canvasOffset.left);
-        var canvasY = Math.floor(e.pageY - canvasOffset.top);
+    function loadAndDraw(src) {
+        var image = new Image();
+        image.crossOrigin = ''; // если нужно
+        image.onload = function() {
+            // вычисляем новые размеры canvas, сохраняя соотношение сторон
+            var iw = image.width, ih = image.height;
+            var ratio = iw / ih;
+            var targetW = maxWidth, targetH = Math.round(targetW / ratio);
 
-        var imageData = ctx.getImageData(canvasX, canvasY, 1, 1);
-        var pixel = imageData.data;
+            if (targetH > maxHeight) {
+                targetH = maxHeight;
+                targetW = Math.round(targetH * ratio);
+            }
 
-        var pixelColor = "rgba("+pixel[0]+", "+pixel[1]+", "+pixel[2]+", "+pixel[3]+")";
+            // устанавливаем размеры canvas (элемента и атрибутов)
+            canvas.width = targetW;
+            canvas.height = targetH;
+
+            // опционально: меняем CSS ширину/высоту (если нужно)
+            canvas.style.width = targetW + 'px';
+            canvas.style.height = targetH + 'px';
+
+            // очищаем и рисуем изображение, масштабируя на весь canvas
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        };
+        image.src = src;
+    }
+
+    // начальная загрузка
+    loadAndDraw(images[iActiveImage]);
+
+    // переключение изображений
+    $('#swImage').click(function(){
+        iActiveImage = (iActiveImage + 1) % images.length;
+        loadAndDraw(images[iActiveImage]);
+    });
+
+    // получение цвета: используем координаты относительно реального canvas размера
+    $('#panel').mousemove(function(e) {
+        var rect = canvas.getBoundingClientRect();
+        var x = Math.floor((e.clientX - rect.left) * (canvas.width / rect.width));
+        var y = Math.floor((e.clientY - rect.top) * (canvas.height / rect.height));
+        if (x < 0 || y < 0 || x >= canvas.width || y >= canvas.height) return;
+        var imageData = ctx.getImageData(x, y, 1, 1).data;
+        var pixelColor = "rgba("+imageData[0]+","+imageData[1]+","+imageData[2]+","+ (imageData[3]/255) +")";
         $('#preview').css('backgroundColor', pixelColor);
     });
 
-    $('#panel').click(function(e) { // Обработчик события нажатия на кнопку мыши
-        var canvasOffset = $(canvas).offset();
-        var canvasX = Math.floor(e.pageX - canvasOffset.left);
-        var canvasY = Math.floor(e.pageY - canvasOffset.top);
+    $('#panel').click(function(e) {
+    var rect = canvas.getBoundingClientRect();
+    var x = Math.floor((e.clientX - rect.left) * (canvas.width / rect.width));
+    var y = Math.floor((e.clientY - rect.top) * (canvas.height / rect.height));
+    if (x < 0 || y < 0 || x >= canvas.width || y >= canvas.height) return;
+    var pixel = ctx.getImageData(x, y, 1, 1).data;
+    $('#rVal').val(pixel[0]);
+    $('#gVal').val(pixel[1]);
+    $('#bVal').val(pixel[2]);
+    $('#rgbVal').val(pixel[0]+','+pixel[1]+','+pixel[2]);
+    $('#rgbaVal').val(pixel[0]+','+pixel[1]+','+pixel[2]+','+pixel[3]);
+    var dColor = pixel[2] + 256 * pixel[1] + 65536 * pixel[0];
+    var hex = '#' + ('000000' + dColor.toString(16)).slice(-6);
+    $('#hexVal').val(hex);
 
-        var imageData = ctx.getImageData(canvasX, canvasY, 1, 1);
-        var pixel = imageData.data;
-
-        $('#rVal').val(pixel[0]);
-        $('#gVal').val(pixel[1]);
-        $('#bVal').val(pixel[2]);
-
-        $('#rgbVal').val(pixel[0]+','+pixel[1]+','+pixel[2]);
-        $('#rgbaVal').val(pixel[0]+','+pixel[1]+','+pixel[2]+','+pixel[3]);
-        var dColor = pixel[2] + 256 * pixel[1] + 65536 * pixel[0];
-        $('#hexVal').val( '#' + dColor.toString(16) );
-    }); 
-
-    $('#swImage').click(function(e) { // Переключение изображений
-        iActiveImage++;
-        if (iActiveImage >= 2) iActiveImage = 0;
-        image.src = images[iActiveImage];
-    });
+    // обновляем блок выбранного цвета
+    var alpha = (pixel[3] / 255).toFixed(2);
+    var rgbaCss = 'rgba('+pixel[0]+','+pixel[1]+','+pixel[2]+','+alpha+')';
+    $('#selectedColor').css({
+        'background-color': rgbaCss,
+        'color': (pixel[0]*0.299 + pixel[1]*0.587 + pixel[2]*0.114) > 186 ? '#000' : '#fff'
+    }).text(hex + (alpha < 1 ? ' / a='+alpha : ''));
 });
-        </script>
+
+});
+</script>
+
 </body>
 </html>
